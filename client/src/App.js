@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TestComponent from './Components/TestComponent';
+import Dashboard from './Components/Dashboard';
 
 
 class App extends Component {
@@ -34,7 +34,7 @@ class App extends Component {
     return (
       <React.Fragment>
         { this.state.data &&
-          <TestComponent data={this.state.data}/>
+          <Dashboard data={this.state.data}/>
         }
       </React.Fragment>
     );
