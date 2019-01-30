@@ -1,0 +1,29 @@
+{
+  "name": "store-app",
+  "version": "1.0.0",
+  "description": "react hooks with node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VolodymyrHarhay/ts-recompose-styled-components.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VolodymyrHarhay/ts-recompose-styled-components/issues"
+  },
+  "homepage": "https://github.com/VolodymyrHarhay/ts-recompose-styled-components#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.7",
+    "swagger-ui-express": "^4.0.2",
+    "yamljs": "^0.3.0"
+  }
+}
