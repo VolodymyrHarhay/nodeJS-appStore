@@ -23,16 +23,13 @@ router.post('/login', (req, res, next) => {
         console.log(info.message);
         res.send(info.message);
       } else {
-        console.log('user in login 1 = ', user);
-        req.login(user, (error) => {
-          console.log('err = ', error);
+        req.login(user, {session: false}, (error) => {
           if (error) return next(error)
-          console.log('user in login 2 = ', user);
-          // const token = jwt.sign({ id: user.email }, jwtSecret.secret);
+          const token = jwt.sign({ id: user.email }, jwtSecret.secret);
           //Send back the token to the user
           return res.json({
             auth: true,
-            token: '',
+            token: token,
             message: 'user found & logged in',
             user: user
           })

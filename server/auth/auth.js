@@ -16,9 +16,7 @@ passport.use('signup', new localStrategy({
   session: false,
 }, async (email, password, done) => {
     try {
-      console.log({Users});
       const user = Users.filter(x => x.email === email);
-      console.log({user});
       if (user.length) {
         console.log('username already taken');
         return done(null, false, { message: 'username already taken' });
@@ -43,7 +41,6 @@ passport.use('login', new localStrategy({
 }, async (email, password, done) => {
   try {
     const user = Users.filter(x => x.email === email)[0];
-    console.log('user in login passport = ', user);
     if (!user) {
       console.log('User not found');
       return done(null, false, { message: 'User not found' });
@@ -81,3 +78,6 @@ passport.use(new JWTstrategy({
     done(error);
   }
 }));
+
+//{"email":"1234","password":"1234"}
+//http://localhost:5000/user/profile?secret_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQiLCJpYXQiOjE1NDk4MTQ0NzR9.giAQE0xCwe26yJ7fX-3bieOyhNoOWiH66kp6_kbSPwg
