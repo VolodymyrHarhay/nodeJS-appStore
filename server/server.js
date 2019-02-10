@@ -14,14 +14,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
+require('./auth/auth');
+const routes = require('./routes/routes');
+const secureRoutes = require('./routes/secure-routes');
+
+app.use('/', routes);
+app.use('/user', passport.authenticate('jwt', { session : false }), secureRoutes );
+
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.json({ error : err });
+});
+
+app.get('/api/getTestData', (req, res) => {
+  res.json(`Hello World 2`);
+});
+
 
 const port = process.env.PORT || 5000;
 
 // console.log that your server is up and running
 app.listen(port, () => console.log(`Listening on port ${port}`));
-
-// create a GET route
-app.get('/api/getTestData', (req, res) => {
-    res.json('Hello World');
-});
-  

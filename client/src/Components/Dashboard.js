@@ -11,7 +11,7 @@ function Dashboard(props) {
 
   return (
       <div>
-        <Button variant="link" onClick={handleClick}>Sign In</Button>
+        <Button variant="link" onClick={handleClick}>Sign In - {props.data}</Button>
       </div>
   );
 };
