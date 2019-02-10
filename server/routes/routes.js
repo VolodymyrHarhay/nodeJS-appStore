@@ -6,7 +6,7 @@ const jwtSecret = require('../config/jwtConfig');
 
 const router = express.Router();
 
-router.get('/signup', passport.authenticate('signup', { session : false }) , async (req, res, next) => {
+router.post('/signup', passport.authenticate('signup', { session : false }) , async (req, res, next) => {
   res.json({ 
     message : 'Signup successful',
     user : req.user 
