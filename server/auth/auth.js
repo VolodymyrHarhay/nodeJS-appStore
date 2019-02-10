@@ -18,7 +18,8 @@ passport.use('signup', new localStrategy({
     try {
       console.log({Users});
       const user = Users.filter(x => x.email === email);
-      if (user) {
+      console.log({user});
+      if (user.length) {
         console.log('username already taken');
         return done(null, false, { message: 'username already taken' });
       }
@@ -41,21 +42,22 @@ passport.use('login', new localStrategy({
   session : false
 }, async (email, password, done) => {
   try {
-    const user = Users.filter(x => x.email === email);
+    const user = Users.filter(x => x.email === email)[0];
+    console.log('user in login passport = ', user);
     if (!user) {
-      console.log('username already taken');
+      console.log('User not found');
       return done(null, false, { message: 'User not found' });
     }
-     else {
-      const validate = await bcrypt.compare(password, user.password)
+    else {
+      const validate = await bcrypt.compare(password, user.password);
       if (!validate) {
-        console.log('passwords do not match');
+        console.log('Wrong Password');
         return done(null, false, { message: 'Wrong Password' });
       }
       console.log('Logged in Successfully');
       return done(null, user);
-      } 
-    }
+    } 
+  }
     catch (err) {
       done(err);
     }
@@ -67,7 +69,8 @@ passport.use(new JWTstrategy({
   jwtFromRequest : ExtractJWT.fromUrlQueryParameter('secret_token')
 }, async (jwt_payload, done) => {
   try {
-    const user = Users.filter(x => x.email === jwt_payload.id);
+    const user = Users.filter(x => x.email === jwt_payload.id)[0];
+    console.log('user in jwt = ',user);
     if(user) {
       return done(null, user);
     }

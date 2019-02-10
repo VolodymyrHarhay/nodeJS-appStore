@@ -29,7 +29,12 @@ app.use(function(err, req, res, next) {
 app.get('/api/getTestData', (req, res) => {
   res.json(`Hello World 2`);
 });
-
+// app.post('/signup', passport.authenticate('signup', { session : false }) , async (req, res, next) => {
+//   res.json({ 
+//     message : 'Signup successful',
+//     user : req.user 
+//   });
+// });
 
 const port = process.env.PORT || 5000;
 

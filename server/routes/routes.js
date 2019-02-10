@@ -13,33 +13,40 @@ router.post('/signup', passport.authenticate('signup', { session : false }) , as
   });
 });
 
-router.post('/login', async (req, res, next) => {
-  passport.authenticate('login', async (err, user, info) => {
+router.post('/login', (req, res, next) => {
+  passport.authenticate('login', (err, user, info) => {
     try {
-      if(err || !user){
+      if(err || !user) {
         const error = new Error('An Error occured')
         return next(error);
-      }
-      if (info) {
+      } else if (info) {
         console.log(info.message);
         res.send(info.message);
+      } else {
+        console.log('user in login 1 = ', user);
+        req.login(user, (error) => {
+          console.log('err = ', error);
+          if (error) return next(error)
+          console.log('user in login 2 = ', user);
+          // const token = jwt.sign({ id: user.email }, jwtSecret.secret);
+          //Send back the token to the user
+          return res.json({
+            auth: true,
+            token: '',
+            message: 'user found & logged in',
+            user: user
+          })
+        });
       }
-      req.login(user, async (error) => {
-        if( error ) return next(error)
-        const token = jwt.sign({ id: user.email }, jwtSecret.secret);
-        //Send back the token to the user
-        return res.json({
-          auth: true,
-          token: token,
-          message: 'user found & logged in',
-          user: user
-        })
-      });
     }
     catch (error) {
       return next(error);
     }
   })(req, res, next);
 });
+
+// app.get('/api/getTestData', (req, res) => {
+//   res.send('Hello World 2');
+// });
 
 module.exports = router;
