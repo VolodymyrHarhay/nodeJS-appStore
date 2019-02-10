@@ -16,6 +16,7 @@ passport.use('signup', new localStrategy({
   session: false,
 }, async (email, password, done) => {
     try {
+      console.log({Users});
       const user = Users.filter(x => x.email === email);
       if (user) {
         console.log('username already taken');
