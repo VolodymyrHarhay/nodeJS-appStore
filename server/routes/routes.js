@@ -6,22 +6,41 @@ const jwtSecret = require('../config/jwtConfig');
 
 const router = express.Router();
 
-router.post('/signup', passport.authenticate('signup', { session : false }) , async (req, res, next) => {
-  res.json({ 
-    message : 'Signup successful',
-    user : req.user 
-  });
+router.post('/signup', (req, res, next) => {
+  passport.authenticate('signup', (err, user, info) => {
+    if (err) {
+      const error = new Error('An Error occured')
+      return next(error);
+    };
+    if (info) {
+      res.json({
+        message: info,
+        user : null,
+        err: true
+      });
+    }
+    else {
+      res.json({ 
+        message : 'Signup successful',
+        user : user,
+        err: false
+      });
+    }
+  })(req, res, next);
 });
 
 router.post('/login', (req, res, next) => {
   passport.authenticate('login', (err, user, info) => {
     try {
-      if(err || !user) {
+      if(err) {
         const error = new Error('An Error occured')
         return next(error);
       } else if (info) {
-        console.log(info.message);
-        res.send(info.message);
+        res.json({
+          message: info,
+          user : null,
+          err: true
+        });
       } else {
         req.login(user, {session: false}, (error) => {
           if (error) return next(error)
@@ -30,8 +49,9 @@ router.post('/login', (req, res, next) => {
           return res.json({
             auth: true,
             token: token,
-            message: 'user found & logged in',
-            user: user
+            message: 'User found & logged in',
+            user: user,
+            err: false
           })
         });
       }

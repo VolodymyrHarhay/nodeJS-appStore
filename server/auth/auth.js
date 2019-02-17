@@ -19,7 +19,7 @@ passport.use('signup', new localStrategy({
       const user = Users.filter(x => x.email === email);
       if (user.length) {
         console.log('username already taken');
-        return done(null, false, { message: 'username already taken' });
+        return done(null, false, 'Username already taken');
       }
       const hashedPassword = await bcrypt.hash(password, BCRYPT_SALT_ROUNDS);
       const newUser = {
@@ -43,15 +43,15 @@ passport.use('login', new localStrategy({
     const user = Users.filter(x => x.email === email)[0];
     if (!user) {
       console.log('User not found');
-      return done(null, false, { message: 'User not found' });
+      return done(null, false, 'User not found');
     }
     else {
       const validate = await bcrypt.compare(password, user.password);
       if (!validate) {
         console.log('Wrong Password');
-        return done(null, false, { message: 'Wrong Password' });
+        return done(null, false, 'Wrong Password');
       }
-      console.log('Logged in Successfully');
+      console.log('User found & logged in');
       return done(null, user);
     } 
   }
@@ -63,11 +63,12 @@ passport.use('login', new localStrategy({
 
 passport.use(new JWTstrategy({
   secretOrKey : jwtSecret.secret,
-  jwtFromRequest : ExtractJWT.fromUrlQueryParameter('secret_token')
+  jwtFromRequest : ExtractJWT.fromUrlQueryParameter('secret_token'),
+  session: false
 }, async (jwt_payload, done) => {
   try {
     const user = Users.filter(x => x.email === jwt_payload.id)[0];
-    console.log('user in jwt = ',user);
+    console.log('user in jwt = ', user);
     if(user) {
       return done(null, user);
     }
