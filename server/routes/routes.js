@@ -62,6 +62,11 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
+router.get('/api/getTestData', (req, res) => {
+  res.json(`Hello World 3`);
+});
+
+
 // app.get('/api/getTestData', (req, res) => {
 //   res.send('Hello World 2');
 // });

@@ -32,11 +32,11 @@ class App extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div>
         { this.state.data &&
           <Dashboard data={this.state.data}/>
         }
-      </React.Fragment>
+      </div>
     );
   }
 }

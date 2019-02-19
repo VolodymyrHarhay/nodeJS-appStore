@@ -26,10 +26,6 @@ app.use(function(err, req, res, next) {
   res.json({ error : err });
 });
 
-app.get('/api/getTestData', (req, res) => {
-  res.json(`Hello World 2`);
-});
-
 const port = process.env.PORT || 5000;
 
 // console.log that your server is up and running
