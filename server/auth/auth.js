@@ -63,7 +63,7 @@ passport.use('login', new localStrategy({
 
 passport.use(new JWTstrategy({
   secretOrKey : jwtSecret.secret,
-  jwtFromRequest : ExtractJWT.fromUrlQueryParameter('secret_token'),
+  jwtFromRequest : ExtractJWT.fromAuthHeaderAsBearerToken(),
   session: false
 }, async (jwt_payload, done) => {
   try {
@@ -79,6 +79,3 @@ passport.use(new JWTstrategy({
     done(error);
   }
 }));
-
-//{"email":"1234","password":"1234"}
-//http://localhost:5000/user/profile?secret_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQiLCJpYXQiOjE1NDk4MTQ0NzR9.giAQE0xCwe26yJ7fX-3bieOyhNoOWiH66kp6_kbSPwg

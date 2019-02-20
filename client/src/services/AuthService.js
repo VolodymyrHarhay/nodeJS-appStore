@@ -54,15 +54,13 @@ export default class AuthService {
   }
 
 
-  fetch(url, options) {
+  async fetch(url, options) {
     const headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
     }
 
-    // Setting Authorization header
-    // Authorization: Bearer xxxxxxx.xxxxxxxx.xxxxxx
     if (this.loggedIn()) {
         headers['Authorization'] = 'Bearer ' + this.getToken()
     }
