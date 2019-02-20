@@ -18,6 +18,18 @@ export default class AuthService {
     return Promise.resolve(res);
   }
 
+  async signup(email, password) {
+    const res = await this.fetch(`${this.domain}/signup`, {
+    method: 'POST',
+    body: JSON.stringify({
+      email,
+      password
+    })
+  });
+  return Promise.resolve(res);
+}
+
+
   loggedIn() {
     const token = this.getToken();
     return !!token && !this.isTokenExpired(token);
@@ -62,7 +74,7 @@ export default class AuthService {
     }
 
     if (this.loggedIn()) {
-        headers['Authorization'] = 'Bearer ' + this.getToken()
+      headers['Authorization'] = 'Bearer ' + this.getToken()
     }
 
     return fetch(url, {

@@ -8,20 +8,26 @@ export default class Login extends Component {
     this.Auth = new AuthService();
   }
 
-  componentDidMount() {
-    if(this.Auth.loggedIn()) {
-      this.props.history.replace('/');
-    }
-  }
-
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleFormSubmit = (e) => {
+  handleLogin = (e) => {
     e.preventDefault();
   
     this.Auth.login(this.state.email,this.state.password)
+      .then(res =>{
+        this.props.history.replace('/');
+      })
+      .catch(err =>{
+        alert(err);
+      })
+  }
+
+  handleSignUp = (e) => {
+    e.preventDefault();
+  
+    this.Auth.signup(this.state.email,this.state.password)
       .then(res =>{
         this.props.history.replace('/');
       })
@@ -50,8 +56,11 @@ export default class Login extends Component {
               type="password"
               onChange={this.handleChange}
             />
-            <button type='button' className={styles.form__submit} onClick={this.handleFormSubmit}>
-              SUBMIT
+            <button type='button' className={styles.form__submit} onClick={this.handleLogin}>
+              LogIn
+            </button>
+            <button type='button' className={styles.form__submit} onClick={this.handleSignUp}>
+              SignUp
             </button>
           </form>
         </div>
