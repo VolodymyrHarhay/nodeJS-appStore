@@ -3,11 +3,7 @@ import styles from './login.module.scss';
 
 export default class Login extends Component {
   handleChange = (e) => {
-    this.setState(
-      {
-        [e.target.name]: e.target.value
-      }
-    )
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
@@ -17,24 +13,22 @@ export default class Login extends Component {
           <h1>Login</h1>
           <form>
             <input
-                className={styles.form__item}
-                placeholder="Username goes here..."
-                name="username"
-                type="text"
-                onChange={this.handleChange}
+              className={styles.form__item}
+              placeholder="Email goes here..."
+              name="email"
+              type="email"
+              onChange={this.handleChange}
             />
             <input
-                className={styles.form__item}
-                placeholder="Password goes here..."
-                name="password"
-                type="password"
-                onChange={this.handleChange}
+              className={styles.form__item}
+              placeholder="Password goes here..."
+              name="password"
+              type="password"
+              onChange={this.handleChange}
             />
-            <input
-                className={styles.form__submit}
-                value="SUBMIT"
-                type="submit"
-            />
+            <button type='button' className={styles.form__submit}>
+              SUBMIT
+            </button>
           </form>
         </div>
       </div>
