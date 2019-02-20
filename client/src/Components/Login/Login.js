@@ -8,6 +8,12 @@ export default class Login extends Component {
     this.Auth = new AuthService();
   }
 
+  componentDidMount() {
+    if(this.Auth.loggedIn()) {
+      this.props.history.replace('/');
+    }
+  }
+
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
